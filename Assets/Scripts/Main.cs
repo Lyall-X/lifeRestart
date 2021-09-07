@@ -13,8 +13,14 @@ public class Main : MonoBehaviour
   void Start()
   {
     TableManager events = ManagerCenter.GetManager<TableManager>();
-    // Dictionary<int, EventsTableItem> aa = events.eventsTable;
-    // Debug.Log(aa.Count);
+    List<AgeTableItem> aa = events.ageTable.GetItems();
+    Debug.Log(aa.Count);
+    
+    List<EventsTableItem> bb = events.eventsTable.GetItems();
+    Debug.Log(bb.Count);
+    
+    List<TalentsTableItem> cc = events.talentsTable.GetItems();
+    Debug.Log(cc.Count);
   }
 
   void Update()

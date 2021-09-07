@@ -52,24 +52,18 @@ namespace Common.Data
 	[Serializable]
 	public class EventsTableItem
 	{
-    public int id;
-    public string Event;
-    public string postEvent;
-    public EventsEffect effect;
-    public int NoRandom;
-    public string include;
-    public string exclude;
-    public string[] branch;
+    	public int id;
+    	public string Event;
+    	public string postEvent;
+    	public int CHR;
+    	public int INT;
+    	public int STR;
+    	public int MNY;
+    	public int SPR;
+    	public int LIF;
+    	public int NoRandom;
+    	public string include;
+    	public string exclude;
+    	public string[] branchs;
 	}
-  
-	[Serializable]
-	public class EventsEffect
-  {
-    public int CHR;
-    public int INT;
-    public int STR;
-    public int MNY;
-    public int SPR;
-    public int LIF;
-  }
 }

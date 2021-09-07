@@ -63,6 +63,6 @@ namespace Common.Data
     	public int CHR;
     	public int STR;
     	public int INT;
-    	public int[] exclusive;
+    	public int[] exclusives;
 	}
 }
