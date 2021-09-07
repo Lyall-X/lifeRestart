@@ -7,7 +7,7 @@ public class LoginPanel : MonoBehaviour
 {
   private Button loginBtn;
   private UIManager uiManager;
-  // Start is called before the first frame update
+
   void Start()
   {
     uiManager = ManagerCenter.GetManager<UIManager>();
@@ -15,10 +15,11 @@ public class LoginPanel : MonoBehaviour
     loginBtn.onClick.AddListener(OnLoginClick);
   }
   
-  private void OnLoginClick(){
+  private void OnLoginClick()
+  {
     gameObject.SetActive(false);
-    string mainPanel = "Prefabs/MainPanel";
-    var prefab = uiManager.LoadResAsset<GameObject>(mainPanel);
+    string talentPanel = "Prefabs/TalentPanel";
+    var prefab = uiManager.LoadResAsset<GameObject>(talentPanel);
     if (prefab != null)
     {
       GameObject gameObject;

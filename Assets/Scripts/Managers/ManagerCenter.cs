@@ -15,6 +15,9 @@ public class ManagerCenter
     AddManager<UIManager>();
     
     AddManager<UserManager>();
+    AddManager<EventManager>();
+    AddManager<TalentManager>();
+    AddManager<SummaryManager>();
     
     foreach (var mgr in Managers)
     {
