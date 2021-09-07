@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SuperScrollView;
+using UnityEngine.UI;
+
+public class LifeItemInfo
+{
+  public string m_name;
+}
 
 public static class LifeView 
 {
@@ -11,13 +17,26 @@ public static class LifeView
 public class MainPanel : MonoBehaviour
 {
   private LoopListView2 superScrollView;
-  // Start is called before the first frame update
+  private Button nextBtn;
+
   void Start()
   {
+    nextBtn = GameObject.Find("next").GetComponent<Button>();
+    nextBtn.onClick.AddListener(OnNextClick);
+
     superScrollView = (LoopListView2)GameObject.Find("Scroll View").GetComponent("LoopListView2");
     superScrollView.InitListView(LifeView.lifeItems.Count, OnGetItemByIndex);//实例化prefab
-    
-    this.OnJumpBtnClicked(0);//调到顶置位置
+  }
+
+  void OnDestroy() {
+    LifeView.lifeItems.Clear();
+    this.SetListItemCount(0);
+  }
+  
+  private void OnNextClick(){
+    LifeView.lifeItems.Add(new LifeItemInfo());
+    SetListItemCount(LifeView.lifeItems.Count);
+    MoveToItemIndex(LifeView.lifeItems.Count - 1);
   }
 
   LoopListViewItem2 OnGetItemByIndex(LoopListView2 listView, int index)
@@ -32,36 +51,25 @@ public class MainPanel : MonoBehaviour
     {
       return null;
     }
-    LoopListViewItem2 item = listView.NewListViewItem("LifeItem");
+    
+    LoopListViewItem2 item = superScrollView.NewListViewItem("LifeItem");
     LifeData itemScript = item.GetComponent<LifeData>();
-    // if (item.IsInitHandlerCalled == false)
-    // {
-      
-      item.IsInitHandlerCalled = true;
-      itemScript.OnClick += OnClick;
-      itemScript.OnEnter += OnEnter;
-      itemScript.OnExit += OnExit;
-    // }
+    itemScript.initData(itemData);
     return item;
   }
+  void SetListItemCount(int itemCount, bool resetPos = true)
+  {
+    if (superScrollView != null)
+    {
+      superScrollView.SetListItemCount(itemCount, resetPos);
+    }
+  }  
 
-  void OnJumpBtnClicked(int i)
+  void MoveToItemIndex(int index)
   {
-    if (i < 0)
-      return;
-    superScrollView.MovePanelToItemIndex(i, 0);
-  }
-
-  private void  OnClick(LifeData item)
-  {
-    Debug.Log("点击！！");
-  }
-  private void OnEnter(LifeData item)
-  {
-    Debug.Log("移入！！");
-  }
-  private void OnExit(LifeData item)
-  {
-    Debug.Log("移出！！");
+    if (superScrollView != null)
+    {
+      superScrollView.MovePanelToItemIndex(index, 0);
+    }
   }
 }

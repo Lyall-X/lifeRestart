@@ -5,7 +5,7 @@ using UObject = UnityEngine.Object;
 public class UIManager : BaseManager 
 {
   private Canvas _uiCanvas;
-  protected Canvas uiCanvas
+  public Canvas uiCanvas
   {
     get
     {
@@ -25,7 +25,6 @@ public class UIManager : BaseManager
     {
       GameObject gameObject;
       gameObject = Instantiate<GameObject>(prefab);
-      gameObject.name = "LoadingPanel";
       gameObject.transform.SetParent(uiCanvas.transform);
       gameObject.transform.localPosition = Vector3.zero;
       gameObject.transform.localScale = Vector3.one;
