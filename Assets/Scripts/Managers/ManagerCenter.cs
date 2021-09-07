@@ -12,8 +12,9 @@ public class ManagerCenter
   public static void InitManager()
   {
     AddManager<TableManager>();
-    AddManager<UserManager>();
     AddManager<UIManager>();
+    
+    AddManager<UserManager>();
     
     foreach (var mgr in Managers)
     {
