@@ -16,7 +16,7 @@ public class Utils
       }
       if (AppConst.DebugMode)
       {
-        return Application.dataPath + "/res/";
+        return Application.dataPath + "/Resources/";
       }
       var dataDir = Path.GetDirectoryName(Application.dataPath);
       return dataDir + "/PersistentData/";
