@@ -15,3 +15,16 @@ public enum DefaultProp
   TLT,      // 天赋 talent TLT
   EVT,      // 事件 event EVT
 }
+
+
+public class UserDataBase : ICloneable
+{
+  public long times = 0;
+  public Dictionary<DefaultProp, int> m_prop = new Dictionary<DefaultProp, int>();
+  public Dictionary<DefaultProp, HashSet<int>> m_ext = new Dictionary<DefaultProp, HashSet<int>>();
+
+  public object Clone()
+  {
+    return this.MemberwiseClone();
+  }
+}

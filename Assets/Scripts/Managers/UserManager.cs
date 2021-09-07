@@ -4,25 +4,11 @@ using UnityEngine;
 using System.IO;
 using Common.Data;
 
-public class UserDataBase : ICloneable
-{
-  public long times = 0;
-  public Dictionary<DefaultProp, int> m_prop = new Dictionary<DefaultProp, int>();
-  public Dictionary<DefaultProp, HashSet<int>> m_ext = new Dictionary<DefaultProp, HashSet<int>>();
-
-  public object Clone()
-  {
-    return this.MemberwiseClone();
-  }
-}
-
 public class AgeItem
 {
   public int age;
   public Dictionary<int, float> events = new Dictionary<int, float>(); // < eventid, random rate>
 }
-
-//******************************************************************************************************
 
 public class UserManager : BaseManager 
 {

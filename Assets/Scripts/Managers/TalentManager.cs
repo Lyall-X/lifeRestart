@@ -6,17 +6,19 @@ using Common.Data;
 
 public class TalentManager : BaseManager 
 {
-  private Dictionary<int, TalentsTableItem> Config = new Dictionary<int, TalentsTableItem>();
+  private Dictionary<int, TalentsTableItem> Config = new Dictionary<int, TalentsTableItem>(); //id , items
+  private Dictionary<int, List<TalentsTableItem>> gradeConfig = new Dictionary<int, List<TalentsTableItem>>(); // grade, items
 
   public override void Initialize()
   {
     // 初始化Talents配置表
     TalentsTable talentsTable = ManagerCenter.GetManager<TableManager>().talentsTable;
-    foreach (TalentsTable item in talentsTable.GetItems())
+    foreach (TalentsTableItem item in talentsTable.GetItems())
     {
       if (item != null)
       {
         Config.Add(item.id, item);
+        gradeConfig[item.grade].Add(item);
       }
     }
   }
@@ -28,5 +30,23 @@ public class TalentManager : BaseManager
       return Utils.CheckCondition(prop, Config[talentId].condition);
     }
     return false;
+  }
+
+  public TalentsTableItem TalentRandom()
+  {
+    float random = Utils.Random(0f, 1f);
+    int grade = 0;
+    if (random >= 0.11)
+      grade = 0;
+    else if (random >=0.011)
+      grade = 1;
+    else if (random >=0.001)
+      grade = 2;
+    else
+      grade = 3;
+      
+    while(gradeConfig[grade].Count == 0) grade--;
+    int index = Utils.Random(0, gradeConfig[grade].Count - 1);
+    return gradeConfig[grade][index];
   }
 }
