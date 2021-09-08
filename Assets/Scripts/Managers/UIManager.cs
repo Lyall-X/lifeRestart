@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.IO;
 using UObject = UnityEngine.Object;
+using UnityEngine.UI;
 
 public class UIManager : BaseManager 
 {
@@ -19,8 +20,13 @@ public class UIManager : BaseManager
 
   public override void Initialize()
   {
-    string loginPanel = "Prefabs/LoginPanel";
-    var prefab = this.LoadResAsset<GameObject>(loginPanel);
+    this.ShowUI("LoginPanel");
+  }
+
+  public GameObject ShowUI(string uiname)
+  {
+    string Panel = "Prefabs/" + uiname;
+    var prefab = this.LoadResAsset<GameObject>(Panel);
     if (prefab != null)
     {
       GameObject gameObject;
@@ -30,7 +36,15 @@ public class UIManager : BaseManager
       gameObject.transform.localScale = Vector3.one;
       gameObject.GetComponent<RectTransform>().offsetMax = new Vector2();
       gameObject.GetComponent<RectTransform>().offsetMin = new Vector2();
+      return gameObject;
     }
+    return null;
+  }
+
+  public void ShowTips(string content)
+  {
+    GameObject o = this.ShowUI("TipsPanel");
+    o.transform.Find("Text").GetComponent<Text>().text = content;
   }
 
   public T LoadResAsset<T>(string path) where T : UObject

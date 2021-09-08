@@ -16,6 +16,7 @@ public class TalentPanel : MonoBehaviour
   private Button startBtn;
   private UIManager uiManager;
   private LoopListView2 superScrollView;
+  private UserManager userManager;
 
   void Start()
   {
@@ -29,7 +30,12 @@ public class TalentPanel : MonoBehaviour
     superScrollView = (LoopListView2)GameObject.Find("Scroll View").GetComponent("LoopListView2");
     superScrollView.InitListView(TalentsView.talentItems.Count, OnGetItemByIndex);//实例化prefab
     
-    TalentsView.talentItems.Add(new TalentsTableItem());
+    userManager = ManagerCenter.GetManager<UserManager>();
+    for (int i = 0; i < AppConst.TalentCount; i ++)
+    {
+      TalentsTableItem item = userManager.TalentRandom();
+      TalentsView.talentItems.Add(item);
+    }
     SetListItemCount(TalentsView.talentItems.Count);
   }
   
@@ -42,7 +48,6 @@ public class TalentPanel : MonoBehaviour
 
   private void OnStartClick()
   {
-    gameObject.SetActive(false);
     string mainPanel = "Prefabs/MainPanel";
     var prefab = uiManager.LoadResAsset<GameObject>(mainPanel);
     if (prefab != null)
@@ -54,6 +59,7 @@ public class TalentPanel : MonoBehaviour
       gameObject.transform.localScale = Vector3.one;
       gameObject.GetComponent<RectTransform>().offsetMax = new Vector2();
       gameObject.GetComponent<RectTransform>().offsetMin = new Vector2();
+      Destroy(gameObject);
     }
   }
   
@@ -71,7 +77,19 @@ public class TalentPanel : MonoBehaviour
     }
     
     LoopListViewItem2 item = superScrollView.NewListViewItem("talentItem");
-    // item.GetComponent<Image>().color = new Color();
+    item.name = index.ToString();
+    item.transform.Find("Text").GetComponent<Text>().text = itemData.name + " (" + itemData.description + ") ";
+    item.GetComponent<Toggle>().onValueChanged.AddListener((bool isOn) =>
+    {
+      if (!userManager.userData.m_ext[DefaultProp.TLT].Add(itemData.id))
+      {
+        Debug.Log("重复添加了");
+        return;
+      }
+        Debug.Log("23222");
+    });
+    item.transform.Find("Image").GetComponent<Image>().color = AppConst.gradeArray[itemData.grade];
+    
     return item;
   }
 

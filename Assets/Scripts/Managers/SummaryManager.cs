@@ -26,6 +26,8 @@ public class SummaryManager : BaseManager
       t.min = item.min;
       t.judge = item.judge;
       t.grade = item.grade;
+      if (!Config.ContainsKey(item.type))
+        Config.Add(item.type, new List<SummaryItem>());
       Config[item.type].Add(t);
     }
   }

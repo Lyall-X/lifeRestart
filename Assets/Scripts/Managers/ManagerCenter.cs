@@ -14,6 +14,7 @@ public class ManagerCenter
     AddManager<TableManager>();
     AddManager<UIManager>();
     
+    AddManager<AgeManager>();
     AddManager<UserManager>();
     AddManager<EventManager>();
     AddManager<TalentManager>();

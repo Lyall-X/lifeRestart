@@ -4,57 +4,37 @@ using UnityEngine;
 using System.IO;
 using Common.Data;
 
-public class AgeItem
-{
-  public int age;
-  public Dictionary<int, float> events = new Dictionary<int, float>(); // < eventid, random rate>
-}
-
 public class UserManager : BaseManager 
 {
-  private UserDataBase userData = new UserDataBase();
-  private List<UserDataBase> recordData = new List<UserDataBase>();
+  public UserDataBase userData = new UserDataBase();
+  public List<UserDataBase> recordData = new List<UserDataBase>();
 
-  private Dictionary<int, AgeItem> Config = new Dictionary<int, AgeItem>();
+  AgeManager ageManager;
+  EventManager eventManager;
+  TalentManager talentManager;
+  SummaryManager summaryManager;
 
   public override void Initialize()
   {
-    // 初始化age配置表
-    AgeTable ageTable = ManagerCenter.GetManager<TableManager>().ageTable;
-    foreach (AgeTableItem item in ageTable.GetItems())
-    {
-      if (item != null)
-      {
-        AgeItem value = new AgeItem();
-        value.age = item.id;
-        if (item.Events == null)
-          continue;
-        foreach(string e in item.Events)
-        {
-          string[] es = e.Split('*');
-          if (es.Length == 1)
-            value.events[int.Parse(es[0])] = 1;
-          else
-            value.events[int.Parse(es[0])] = float.Parse(es[1]);
-        }
-        Config.Add(item.id, value);
-      }
-    }
+    ageManager = ManagerCenter.GetManager<AgeManager>();
+    eventManager = ManagerCenter.GetManager<EventManager>();
+    talentManager = ManagerCenter.GetManager<TalentManager>();
+    summaryManager = ManagerCenter.GetManager<SummaryManager>();
+  }
+
+  public TalentsTableItem TalentRandom()
+  {
+    return talentManager.TalentRandom();
+  }
+  
+  public int Exclusive(HashSet<int> talents, int itemid)
+  {
+    return talentManager.Exclusive(talents, itemid);
   }
 
   public void Restart()
   {
-    userData.m_prop[DefaultProp.AGE] = -1;
-    userData.m_prop[DefaultProp.CHR] = 0;
-    userData.m_prop[DefaultProp.INT] = 0;
-    userData.m_prop[DefaultProp.STR] = 0;
-    userData.m_prop[DefaultProp.MNY] = 0;
-    userData.m_prop[DefaultProp.SPR] = 0;
-    userData.m_prop[DefaultProp.LIF] = 1;
-
-    userData.m_ext[DefaultProp.TLT].Clear();
-    userData.m_ext[DefaultProp.EVT].Clear();
-    
+    ageManager.Restart(userData);
     recordData.Clear();
   }
 
@@ -106,9 +86,9 @@ public class UserManager : BaseManager
     return userData.m_prop[DefaultProp.LIF] < 1;
   }
   
-  public AgeItem AgeNext()
-  {
-    this.ChangeProp(DefaultProp.AGE, userData.m_prop[DefaultProp.AGE] + 1);
-    return Config[userData.m_prop[DefaultProp.AGE]];
-  }
+  // public AgeItem AgeNext()
+  // {
+  //   this.ChangeProp(DefaultProp.AGE, userData.m_prop[DefaultProp.AGE] + 1);
+  //   return Config[userData.m_prop[DefaultProp.AGE]];
+  // }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Common.Data;
 
 public enum DefaultProp
 {       
@@ -19,7 +20,7 @@ public enum DefaultProp
 
 public class UserDataBase : ICloneable
 {
-  public long times = 0;
+  // 属性
   public Dictionary<DefaultProp, int> m_prop = new Dictionary<DefaultProp, int>();
   public Dictionary<DefaultProp, HashSet<int>> m_ext = new Dictionary<DefaultProp, HashSet<int>>();
 

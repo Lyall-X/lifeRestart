@@ -18,6 +18,8 @@ public class TalentManager : BaseManager
       if (item != null)
       {
         Config.Add(item.id, item);
+        if (!gradeConfig.ContainsKey(item.grade))
+          gradeConfig.Add(item.grade, new List<TalentsTableItem>());;
         gradeConfig[item.grade].Add(item);
       }
     }
@@ -48,5 +50,21 @@ public class TalentManager : BaseManager
     while(gradeConfig[grade].Count == 0) grade--;
     int index = Utils.Random(0, gradeConfig[grade].Count - 1);
     return gradeConfig[grade][index];
+  }
+
+  public int Exclusive(HashSet<int> talents, int itemid)
+  {
+    if (!Config.ContainsKey(itemid) || Config[itemid].exclusives.Length == 0) return 0;
+    foreach(var talent in talents)
+    {
+      foreach(var e in Config[itemid].exclusives)
+      {
+        if (talent == e)
+        {
+          return talent;
+        }
+      }
+    }
+    return 0;
   }
 }
