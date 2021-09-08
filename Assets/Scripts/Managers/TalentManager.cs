@@ -6,8 +6,8 @@ using Common.Data;
 
 public class TalentManager : BaseManager 
 {
-  private Dictionary<int, TalentsTableItem> Config = new Dictionary<int, TalentsTableItem>(); //id , items
-  private Dictionary<int, List<TalentsTableItem>> gradeConfig = new Dictionary<int, List<TalentsTableItem>>(); // grade, items
+  public Dictionary<int, TalentsTableItem> Config = new Dictionary<int, TalentsTableItem>(); //id , items
+  public Dictionary<int, List<TalentsTableItem>> gradeConfig = new Dictionary<int, List<TalentsTableItem>>(); // grade, items
 
   public override void Initialize()
   {
@@ -54,7 +54,7 @@ public class TalentManager : BaseManager
 
   public int Exclusive(HashSet<int> talents, int itemid)
   {
-    if (!Config.ContainsKey(itemid) || Config[itemid].exclusives.Length == 0) return 0;
+    if (!Config.ContainsKey(itemid) || Config[itemid].exclusives == null || Config[itemid].exclusives.Length == 0) return 0;
     foreach(var talent in talents)
     {
       foreach(var e in Config[itemid].exclusives)

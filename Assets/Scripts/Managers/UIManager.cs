@@ -44,7 +44,8 @@ public class UIManager : BaseManager
   public void ShowTips(string content)
   {
     GameObject o = this.ShowUI("TipsPanel");
-    o.transform.Find("Text").GetComponent<Text>().text = content;
+    o.transform.Find("#prefab_item/Text").GetComponent<Text>().text = content;
+    GameObject.Destroy(o, 1.1f);
   }
 
   public T LoadResAsset<T>(string path) where T : UObject

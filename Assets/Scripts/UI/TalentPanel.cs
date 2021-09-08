@@ -79,14 +79,37 @@ public class TalentPanel : MonoBehaviour
     LoopListViewItem2 item = superScrollView.NewListViewItem("talentItem");
     item.name = index.ToString();
     item.transform.Find("Text").GetComponent<Text>().text = itemData.name + " (" + itemData.description + ") ";
-    item.GetComponent<Toggle>().onValueChanged.AddListener((bool isOn) =>
+    Toggle toggle = item.GetComponent<Toggle>();
+    toggle.onValueChanged.AddListener((bool isOn) =>
     {
-      if (!userManager.userData.m_ext[DefaultProp.TLT].Add(itemData.id))
+      // 查找独有天赋
+      int exclusivId = userManager.Exclusive(userManager.userData.m_ext[DefaultProp.TLT], itemData.id);
+      if (exclusivId != 0)
       {
-        Debug.Log("重复添加了");
+        toggle.isOn = false;
+        uiManager.ShowTips("与已选择的天赋[" + ManagerCenter.GetManager<TalentManager>().Config[exclusivId].name + "]冲突!");
         return;
       }
-        Debug.Log("23222");
+      // 避免天赋重复
+      if (isOn)
+      {
+        if (userManager.userData.m_ext[DefaultProp.TLT].Count >= AppConst.TalentSelectCount)
+        {
+          toggle.isOn = false;
+          uiManager.ShowTips("只能选" + AppConst.TalentSelectCount + "个天赋!");
+          return;
+        }
+        if(!userManager.userData.m_ext[DefaultProp.TLT].Add(itemData.id))
+        {
+          toggle.isOn = false;
+          uiManager.ShowTips("天赋重复!");
+          return;
+        }
+      }
+      else
+      {
+        userManager.userData.m_ext[DefaultProp.TLT].Remove(itemData.id);
+      }
     });
     item.transform.Find("Image").GetComponent<Image>().color = AppConst.gradeArray[itemData.grade];
     
