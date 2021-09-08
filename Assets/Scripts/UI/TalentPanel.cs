@@ -12,7 +12,6 @@ public static class TalentsView
 
 public class TalentPanel : MonoBehaviour
 {
-  private Button talentBtn;
   private Button startBtn;
   private UIManager uiManager;
   private LoopListView2 superScrollView;
@@ -21,14 +20,9 @@ public class TalentPanel : MonoBehaviour
   void Start()
   {
     uiManager = ManagerCenter.GetManager<UIManager>();
-    
-    talentBtn = GameObject.Find("talent").GetComponent<Button>();
-    talentBtn.onClick.AddListener(OnTalentClick);
     startBtn = GameObject.Find("start").GetComponent<Button>();
     startBtn.onClick.AddListener(OnStartClick);
     
-    superScrollView = (LoopListView2)GameObject.Find("Scroll View").GetComponent("LoopListView2");
-    superScrollView.InitListView(TalentsView.talentItems.Count, OnGetItemByIndex);//实例化prefab
     
     userManager = ManagerCenter.GetManager<UserManager>();
     for (int i = 0; i < AppConst.TalentCount; i ++)
@@ -38,29 +32,15 @@ public class TalentPanel : MonoBehaviour
     }
     SetListItemCount(TalentsView.talentItems.Count);
   }
-  
-
-  private void OnTalentClick()
-  {
-    startBtn.gameObject.SetActive(false);
-    GameObject.Find("Scroll View").gameObject.SetActive(true);
-  }
 
   private void OnStartClick()
   {
-    string mainPanel = "Prefabs/MainPanel";
-    var prefab = uiManager.LoadResAsset<GameObject>(mainPanel);
-    if (prefab != null)
-    {
-      GameObject gameObject;
-      gameObject = Instantiate<GameObject>(prefab);
-      gameObject.transform.SetParent(uiManager.uiCanvas.transform);
-      gameObject.transform.localPosition = Vector3.zero;
-      gameObject.transform.localScale = Vector3.one;
-      gameObject.GetComponent<RectTransform>().offsetMax = new Vector2();
-      gameObject.GetComponent<RectTransform>().offsetMin = new Vector2();
-      Destroy(gameObject);
-    }
+    
+    Debug.Log("111");
+    // GameObject.Find("Scroll View").gameObject.SetActive(true);
+
+    // uiManager.ShowUI("MainPanel");
+    // Destroy(gameObject);
   }
   
   LoopListViewItem2 OnGetItemByIndex(LoopListView2 listView, int index)
