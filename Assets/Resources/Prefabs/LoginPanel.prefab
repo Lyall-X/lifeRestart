@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u8FD9\u5783\u573E\u4EBA\u751F\u4E00\u79D2\u4E5F\u4E0D\u60F3\u5446\u4E86"
+  m_Text: "\u7F8E\u597D\u7684\u4EBA\u751F\uFF0C\u6211\u60F3\u600E\u4E48\u6765\u5C31\u600E\u4E48\u6765"
 --- !u!114 &4876154206923451118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,10 +160,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 75
+    m_FontSize: 60
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 6
     m_MaxSize: 102
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -171,7 +171,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u4EBA\u751F\u91CD\u5F00\u6A21\u62DF\u5668"
+  m_Text: "\u4EBA\u751F\u91CD\u5F00\u6A21\u62DF\u5668(\u4E0A\u5E1D\u7248)"
 --- !u!114 &4876154206949735190
 MonoBehaviour:
   m_ObjectHideFlags: 0

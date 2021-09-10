@@ -9,10 +9,10 @@ public class UserManager : BaseManager
   public UserDataBase userData = new UserDataBase();
   public List<UserDataBase> recordData = new List<UserDataBase>();
 
-  AgeManager ageManager;
-  EventManager eventManager;
-  TalentManager talentManager;
-  SummaryManager summaryManager;
+  public AgeManager ageManager;
+  public EventManager eventManager;
+  public TalentManager talentManager;
+  public SummaryManager summaryManager;
 
   public override void Initialize()
   {
@@ -85,10 +85,24 @@ public class UserManager : BaseManager
   {
     return userData.m_prop[DefaultProp.LIF] < 1;
   }
-  
-  // public AgeItem AgeNext()
-  // {
-  //   this.ChangeProp(DefaultProp.AGE, userData.m_prop[DefaultProp.AGE] + 1);
-  //   return Config[userData.m_prop[DefaultProp.AGE]];
-  // }
+
+  public void Next()
+  {
+    userData.m_prop[DefaultProp.AGE] += 1;
+    List<int> ageList = ageManager.Config[userData.m_prop[DefaultProp.AGE]];
+    if (ageList.Count == 0) Next();
+    int index = Utils.Random(0, ageList.Count);
+    userData.m_event[DefaultProp.EVT].Add(ageList[index]);
+
+    EventsTableItem value;
+    if (eventManager.Config.TryGetValue(ageList[index], out value) && value.id != 0)
+    {
+      userData.m_prop[DefaultProp.CHR] += value.CHR;
+      userData.m_prop[DefaultProp.INT] += value.INT;
+      userData.m_prop[DefaultProp.STR] += value.STR;
+      userData.m_prop[DefaultProp.MNY] += value.MNY;
+      userData.m_prop[DefaultProp.SPR] += value.SPR;
+      userData.m_prop[DefaultProp.LIF] += value.LIF;
+    }
+  }
 }

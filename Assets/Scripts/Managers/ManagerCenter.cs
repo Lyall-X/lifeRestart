@@ -11,14 +11,9 @@ public class ManagerCenter
   /// </summary>
   public static void InitManager()
   {
-    AddManager<TableManager>();
     AddManager<UIManager>();
     
-    AddManager<AgeManager>();
     AddManager<UserManager>();
-    AddManager<EventManager>();
-    AddManager<TalentManager>();
-    AddManager<SummaryManager>();
     
     foreach (var mgr in Managers)
     {
@@ -30,7 +25,7 @@ public class ManagerCenter
   }
 
 
-  static T AddManager<T>() where T : BaseManager, new()
+  public static T AddManager<T>() where T : BaseManager, new()
   {
     var type = typeof(T);
     var obj = new T();

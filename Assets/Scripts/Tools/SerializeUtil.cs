@@ -115,7 +115,7 @@ namespace Common.Data
             }
         }
 
-        public static T Deserialize<T>(string fullPath) where T : class
+        public static T Deserialize<T>(Stream fullPath) where T : class
         {
             IFormatter serializer = new BinaryFormatter();
             SurrogateSelector selector = new SurrogateSelector();
@@ -125,10 +125,7 @@ namespace Common.Data
             selector.AddSurrogate(typeof(Color), context, new ColorSerializationSurrogate());
             selector.AddSurrogate(typeof(Color32), context, new Color32SerializationSurrogate());
             serializer.SurrogateSelector = selector;
-            using (var loadFile = new FileStream(fullPath, FileMode.Open, FileAccess.Read))
-            {
-                return serializer.Deserialize(loadFile) as T;
-            }
+            return serializer.Deserialize(fullPath) as T;
         }
     }
 }

@@ -256,6 +256,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1148fdcbeb60b3d40b0b345f127c395c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventsTable: {fileID: 4900000, guid: 322832f67bc850f43898553cf196f70d, type: 3}
+  ageTable: {fileID: 4900000, guid: 689d44ad2aa6c9e46a1f73c3ca43725a, type: 3}
+  talentsTable: {fileID: 4900000, guid: b7e9a81c28b93d5438c9ed4213591567, type: 3}
+  summaryTable: {fileID: 4900000, guid: 1b5f58e2aca9e4941b8414a5de602773, type: 3}
 --- !u!4 &519420032
 Transform:
   m_ObjectHideFlags: 0

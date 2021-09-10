@@ -13,22 +13,22 @@ public class TableManager : BaseManager
 
   public override void Initialize()
   {
-    eventsTable = LoadData<EventsTable>("Tables/EventsTable.bytes");
-    eventsTable.Initialize();
+    // eventsTable = LoadData<EventsTable>("Tables/EventsTable.bytes");
+    // eventsTable.Initialize();
     
-    ageTable = LoadData<AgeTable>("Tables/AgeTable.bytes");
-    ageTable.Initialize();
+    // ageTable = LoadData<AgeTable>("Tables/AgeTable.bytes");
+    // ageTable.Initialize();
 
-    talentsTable = LoadData<TalentsTable>("Tables/TalentsTable.bytes");
-    talentsTable.Initialize();
+    // talentsTable = LoadData<TalentsTable>("Tables/TalentsTable.bytes");
+    // talentsTable.Initialize();
     
-    summaryTable = LoadData<SummaryTable>("Tables/SummaryTable.bytes");
-    summaryTable.Initialize();
+    // summaryTable = LoadData<SummaryTable>("Tables/SummaryTable.bytes");
+    // summaryTable.Initialize();
   }
 
-  public T LoadData<T>(string path) where T : class
-  {
-    var fullPath = Utils.DataPath + path;
-    return SerializeUtil.Deserialize<T>(fullPath);
-  }
+  // public T LoadData<T>(string path) where T : class
+  // {
+  //   var fullPath = Application.dataPath + path;
+  //   return SerializeUtil.Deserialize<T>(fullPath);
+  // }
 }

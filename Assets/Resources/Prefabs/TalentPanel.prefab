@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4130002428852730475}
   - component: {fileID: 7776603527639836714}
   m_Layer: 5
-  m_Name: start
+  m_Name: starBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ RectTransform:
   m_Children:
   - {fileID: 1229701294737946687}
   m_Father: {fileID: 9032063153073721271}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -473,8 +473,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8057451138534691216}
-  - {fileID: 2237853137827392056}
   - {fileID: 4141889645958358623}
+  - {fileID: 2237853137827392056}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -505,7 +505,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.13333334, g: 0.15686275, b: 0.19215687, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -565,7 +565,7 @@ RectTransform:
   m_Children:
   - {fileID: 3059649909851287676}
   m_Father: {fileID: 9032063153073721271}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -852,7 +852,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u7ACB\u5373\u91CD\u5F00\uFF01"
+  m_Text: "\u8BF7\u9009\u62E9\u5929\u8D4B!"
 --- !u!1 &8761072111733684521
 GameObject:
   m_ObjectHideFlags: 0

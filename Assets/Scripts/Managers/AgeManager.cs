@@ -6,7 +6,7 @@ using Common.Data;
 
 public class AgeManager : BaseManager 
 {
-  private Dictionary<int, Dictionary<int, float>> Config = new Dictionary<int, Dictionary<int, float>>(); // age, <eventid, rate>
+  public Dictionary<int, List<int>> Config = new Dictionary<int, List<int>>(); // age, <eventid, rate>
 
   public override void Initialize()
   {
@@ -16,16 +16,13 @@ public class AgeManager : BaseManager
     {
       if (item != null && item.Events != null)
       {
+        Config[item.id] = new List<int>();
         Dictionary<int, float> value = new Dictionary<int, float>();
         foreach(string e in item.Events)
         {
           string[] es = e.Split('*');
-          if (es.Length == 1)
-            value[int.Parse(es[0])] = 1;
-          else
-            value[int.Parse(es[0])] = float.Parse(es[1]);
+          Config[item.id].Add(int.Parse(es[0]));
         }
-        Config.Add(item.id, value);
       }
     }
   }
@@ -41,7 +38,7 @@ public class AgeManager : BaseManager
     userData.m_prop[DefaultProp.LIF] = 1;
 
     userData.m_ext[DefaultProp.TLT] = new HashSet<int>();
-    userData.m_ext[DefaultProp.EVT] = new HashSet<int>();
+    userData.m_event[DefaultProp.EVT] = new List<int>();
   }
 
   public void ChangeProp(UserDataBase userData, int value)

@@ -7,7 +7,7 @@ using Common.Data;
 
 public class EventManager : BaseManager 
 {
-  private Dictionary<int, EventsTableItem> Config = new Dictionary<int, EventsTableItem>(); //id , items
+  public Dictionary<int, EventsTableItem> Config = new Dictionary<int, EventsTableItem>(); //id , items
 
   public override void Initialize()
   {

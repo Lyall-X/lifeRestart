@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using SuperScrollView;
@@ -12,6 +11,7 @@ public static class TalentsView
 
 public class TalentPanel : MonoBehaviour
 {
+  private Button talentBtn;
   private Button startBtn;
   private UIManager uiManager;
   private LoopListView2 superScrollView;
@@ -20,10 +20,12 @@ public class TalentPanel : MonoBehaviour
   void Start()
   {
     uiManager = ManagerCenter.GetManager<UIManager>();
-    startBtn = GameObject.Find("start").GetComponent<Button>();
+    startBtn = GameObject.Find("starBtn").GetComponent<Button>();
     startBtn.onClick.AddListener(OnStartClick);
     
-    
+    superScrollView = (LoopListView2)GameObject.Find("Scroll View").GetComponent("LoopListView2");
+    superScrollView.InitListView(TalentsView.talentItems.Count, OnGetItemByIndex);//实例化prefab
+    TalentsView.talentItems.Clear();
     userManager = ManagerCenter.GetManager<UserManager>();
     for (int i = 0; i < AppConst.TalentCount; i ++)
     {
@@ -33,14 +35,15 @@ public class TalentPanel : MonoBehaviour
     SetListItemCount(TalentsView.talentItems.Count);
   }
 
-  private void OnStartClick()
+  public void OnStartClick()
   {
-    
-    Debug.Log("111");
-    // GameObject.Find("Scroll View").gameObject.SetActive(true);
-
-    // uiManager.ShowUI("MainPanel");
-    // Destroy(gameObject);
+    if (userManager.userData.m_ext[DefaultProp.TLT].Count < AppConst.TalentSelectCount)
+    {
+      uiManager.ShowTips("请选" + AppConst.TalentSelectCount + "个天赋");
+      return;
+    }
+    uiManager.ShowUI("PropPanel");
+    DestroyImmediate(gameObject);
   }
   
   LoopListViewItem2 OnGetItemByIndex(LoopListView2 listView, int index)
@@ -77,19 +80,18 @@ public class TalentPanel : MonoBehaviour
         {
           toggle.isOn = false;
           uiManager.ShowTips("只能选" + AppConst.TalentSelectCount + "个天赋!");
-          return;
         }
         if(!userManager.userData.m_ext[DefaultProp.TLT].Add(itemData.id))
         {
           toggle.isOn = false;
           uiManager.ShowTips("天赋重复!");
-          return;
         }
       }
       else
       {
         userManager.userData.m_ext[DefaultProp.TLT].Remove(itemData.id);
       }
+      startBtn.transform.Find("Text").GetComponent<Text>().text = (userManager.userData.m_ext[DefaultProp.TLT].Count == AppConst.TalentSelectCount) ? "开启新人生" : "请选择" + AppConst.TalentSelectCount +  "个";
     });
     item.transform.Find("Image").GetComponent<Image>().color = AppConst.gradeArray[itemData.grade];
     

@@ -15,6 +15,9 @@ public class LoginPanel : MonoBehaviour
       uiManager.ShowUI("TalentPanel");
       Destroy(gameObject);
     });
-    ManagerCenter.GetManager<UserManager>().Restart();
+    userManager = ManagerCenter.GetManager<UserManager>();
+    userManager.Restart();
+    
+    GameObject.Find("title").GetComponent<Text>().text = "已重开" + userManager.userData.times + "次";
   }
 }

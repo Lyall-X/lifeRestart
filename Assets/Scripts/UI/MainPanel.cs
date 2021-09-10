@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SuperScrollView;
 using UnityEngine.UI;
+using Common.Data;
 
 public class LifeItemInfo
 {
@@ -18,14 +19,23 @@ public class MainPanel : MonoBehaviour
 {
   private LoopListView2 superScrollView;
   private Button nextBtn;
+  private UserManager userManager;
 
   void Start()
   {
-    nextBtn = GameObject.Find("next").GetComponent<Button>();
+    nextBtn = GameObject.Find("nextBtn").GetComponent<Button>();
     nextBtn.onClick.AddListener(OnNextClick);
 
     superScrollView = (LoopListView2)GameObject.Find("Scroll View").GetComponent("LoopListView2");
     superScrollView.InitListView(LifeView.lifeItems.Count, OnGetItemByIndex);//实例化prefab
+    LifeView.lifeItems.Clear();
+    userManager = ManagerCenter.GetManager<UserManager>();
+    
+    GameObject.Find("restart").GetComponent<Button>().onClick.AddListener(()=>{
+      userManager.userData.times ++;
+      ManagerCenter.GetManager<UIManager>().ShowUI("LoginPanel");
+      Destroy(gameObject);
+    });
   }
 
   void OnDestroy() {
@@ -34,9 +44,18 @@ public class MainPanel : MonoBehaviour
   }
   
   private void OnNextClick(){
-    LifeView.lifeItems.Add(new LifeItemInfo());
+    userManager.Next();
+    LifeItemInfo i = new LifeItemInfo();
+    int eventid = userManager.userData.m_event[DefaultProp.EVT][userManager.userData.m_event[DefaultProp.EVT].Count - 1];
+    i.m_name = userManager.eventManager.Config[eventid].Event;
+    LifeView.lifeItems.Add(i);
     SetListItemCount(LifeView.lifeItems.Count);
     MoveToItemIndex(LifeView.lifeItems.Count - 1);
+
+    for(int j = 0 ; j < 6; j ++)
+    {
+      GameObject.Find("node").transform.Find("node_"+ j).GetComponent<Text>().text = userManager.userData.m_prop[(DefaultProp)j].ToString();
+    }
   }
 
   LoopListViewItem2 OnGetItemByIndex(LoopListView2 listView, int index)
@@ -52,9 +71,9 @@ public class MainPanel : MonoBehaviour
       return null;
     }
     
-    LoopListViewItem2 item = superScrollView.NewListViewItem("LifeItem");
-    LifeData itemScript = item.GetComponent<LifeData>();
-    itemScript.initData(itemData);
+    LoopListViewItem2 item = superScrollView.NewListViewItem("lifeitem");
+    item.name = index.ToString();
+    item.transform.Find("Text").GetComponent<Text>().text = "第" + index + "岁 : " + itemData.m_name;
     return item;
   }
   void SetListItemCount(int itemCount, bool resetPos = true)
